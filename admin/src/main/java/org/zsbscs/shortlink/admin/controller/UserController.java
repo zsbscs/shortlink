@@ -2,11 +2,15 @@ package org.zsbscs.shortlink.admin.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 import org.zsbscs.shortlink.admin.common.convention.result.Result;
 import org.zsbscs.shortlink.admin.common.convention.result.Results;
+import org.zsbscs.shortlink.admin.dto.req.UserLoginReqDTO;
 import org.zsbscs.shortlink.admin.dto.req.UserRegisterReqDTO;
+import org.zsbscs.shortlink.admin.dto.req.UserUpdateReqDTO;
 import org.zsbscs.shortlink.admin.dto.resp.UserActualRespDTO;
+import org.zsbscs.shortlink.admin.dto.resp.UserLoginRespDTO;
 import org.zsbscs.shortlink.admin.dto.resp.UserRespDTO;
 import org.zsbscs.shortlink.admin.service.UserServie;
 
@@ -40,6 +44,27 @@ public class UserController {
     @PostMapping("/api/short-link/v1/user")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam){
         userService.registerUser(requestParam);
+        return Results.success();
+    }
+    @PutMapping("/api/short-link/v1/user")
+    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam){
+        userService.updateUser(requestParam);
+        return  Results.success();
+    }
+    @PostMapping("/api/short-link/v1/user/login")
+    public Result<UserLoginRespDTO> Login(@RequestBody UserLoginReqDTO requestParam){
+        UserLoginRespDTO userLoginRespDTO = userService.login(requestParam);
+            return Results.success(userLoginRespDTO);
+    }
+
+    @GetMapping("api/short-link/v1/user/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("username")String username,@RequestParam("token")String token){
+        return Results.success(userService.check_login(username,token));
+    }
+
+    @DeleteMapping("/api/short-link/v1/user/logout")
+    public Result<Void> logout(@RequestParam("username")String username,@RequestParam("token")String token){
+        userService.logout(username,token);
         return Results.success();
     }
 
