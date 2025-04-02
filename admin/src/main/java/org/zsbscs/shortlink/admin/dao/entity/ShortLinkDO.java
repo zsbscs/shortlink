@@ -1,9 +1,9 @@
-package org.zsbscs.shortlink.project.dao.entity;
+package org.zsbscs.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.zsbscs.shortlink.project.common.database.BaseDO;
+import org.zsbscs.shortlink.admin.common.database.BaseDO;
 
 import java.util.Date;
 
